@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentoria Essencial | Desenvolvimento de Carreira e Desempenho</title>
+<meta name="description" content="Mentoria individual e em grupo para estudantes, profissionais e equipes. Desenvolvimento de carreira, foco e desempenho com acompanhamento especializado.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #08080f; color: white; overflow-x: hidden; }
+
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 50%, rgba(194,65,12,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(251,146,60,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(234,88,12,0.2) 0%, transparent 50%),
+                #08080f;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 20px 60px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    padding: 8px 20px; border-radius: 50px; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); margin-bottom: 32px;
+  }
+  .badge span { width: 6px; height: 6px; border-radius: 50%; background: #fdba74; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  #universo { display: block; margin: 0 auto 48px; }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #fdba74 40%, #fb923c 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero p { font-size: clamp(1rem, 2vw, 1.15rem); opacity: 0.75; max-width: 580px; line-height: 1.8; margin-bottom: 16px; }
+  .hero-desc-box { background: rgba(194,65,12,0.08); border: 1px solid rgba(251,146,60,0.2); border-radius: 16px; padding: 20px 28px; max-width: 580px; margin-bottom: 36px; }
+  .hero-desc-box p { opacity: 1; margin-bottom: 0; font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+  .hero-desc-box strong { color: #fdba74; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: linear-gradient(135deg, #c2410c, #fb923c);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 800; font-size: 0.95rem; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(194,65,12,0.4); transition: transform 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+  }
+
+  .stats {
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    padding: 48px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-size: 2rem; font-weight: 900; color: #fdba74; }
+  .stat-item .label { font-size: 0.78rem; opacity: 0.5; margin-top: 4px; }
+
+  .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-label { text-align: center; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.4; margin-bottom: 16px; }
+  .section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 12px; }
+  .section-sub { text-align: center; opacity: 0.5; font-size: 1rem; margin-bottom: 56px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .card {
+    border-radius: 24px; padding: 32px; position: relative; overflow: hidden;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(251,146,60,0.2);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(251,146,60,0.5); }
+  .card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .card h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 10px; color: #fdba74; }
+  .card p { font-size: 0.85rem; opacity: 0.6; line-height: 1.6; }
+
+  .modalidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .modalidade {
+    border-radius: 24px; padding: 36px 28px; text-align: center;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(251,146,60,0.2);
+    transition: transform 0.3s;
+  }
+  .modalidade:hover { transform: translateY(-4px); }
+  .modalidade .ico { font-size: 3rem; margin-bottom: 16px; }
+  .modalidade h3 { font-size: 1.2rem; font-weight: 900; color: #fdba74; margin-bottom: 10px; }
+  .modalidade p { font-size: 0.83rem; opacity: 0.6; line-height: 1.7; }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(194,65,12,0.12), rgba(251,146,60,0.08));
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 28px;
+    padding: 56px 48px; margin: 0 20px 80px; max-width: 1060px;
+    margin-left: auto; margin-right: auto; text-align: center;
+  }
+  .cta-box h2 { font-size: 2rem; font-weight: 900; margin-bottom: 16px; }
+  .cta-box p { opacity: 0.6; line-height: 1.7; margin-bottom: 32px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .tag { background: rgba(251,146,60,0.15); border: 1px solid rgba(251,146,60,0.3); color: #fdba74; font-size: 0.75rem; font-weight: 700; padding: 5px 16px; border-radius: 50px; }
+
+  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 20px; text-align: center; }
+  .footer-logo { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; background: linear-gradient(135deg, #fdba74, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  footer p { opacity: 0.3; font-size: 0.82rem; margin-bottom: 24px; }
+  .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+  .footer-links a { color: rgba(255,255,255,0.4); font-size: 0.82rem; text-decoration: none; }
+  .footer-links a:hover { color: white; }
+  .footer-copy { font-size: 0.72rem; opacity: 0.2; }
+
+  @media (max-width: 768px) {
+    .stats { gap: 28px; padding: 36px 20px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+    #universo { width: 300px !important; height: 300px !important; }
+    .cta-box { padding: 32px 24px; }
+    .footer-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge"><span></span> Mentoria Essencial · Desenvolvimento Humano</div>
+  <canvas id="universo" width="420" height="420"></canvas>
+  <h1>Mentoria que<br>transforma resultados</h1>
+  <p>Acompanhamento individual e em grupo para estudantes, profissionais e equipes. Método, foco e evolução com quem já passou pelo caminho.</p>
+  <div class="hero-desc-box">
+    <p>🎯 <strong>Mentoria Individual</strong> · 👥 <strong>Mentoria em Grupo</strong> · 📈 <strong>Desenvolvimento de Carreira</strong> · 🧠 <strong>Foco e Desempenho</strong></p>
+  </div>
+  <div class="hero-btns">
+    <a href="https://wa.me/5561985272681" class="btn-primary">Quero uma sessão gratuita →</a>
+    <a href="index.html" class="btn-secondary">← Todos os produtos</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-item"><div class="num">1:1</div><div class="label">Atenção individual</div></div>
+  <div class="stat-item"><div class="num">100%</div><div class="label">Personalizado</div></div>
+  <div class="stat-item"><div class="num">Online</div><div class="label">Em qualquer lugar</div></div>
+  <div class="stat-item"><div class="num">IA</div><div class="label">Ferramentas integradas</div></div>
+</div>
+
+<div class="section">
+  <div class="section-label">Modalidades</div>
+  <h2 class="section-title">Para cada momento da sua jornada</h2>
+  <p class="section-sub">Mentoria adaptada ao seu objetivo — seja você estudante, profissional ou gestor de equipe</p>
+  <div class="modalidades">
+    <div class="modalidade">
+      <div class="ico">🎓</div>
+      <h3>Estudante</h3>
+      <p>Para quem está se preparando para vestibulares, concursos, residência médica, OAB ou qualquer processo seletivo exigente. Método, rotina e mentalidade de aprovação.</p>
+    </div>
+    <div class="modalidade">
+      <div class="ico">💼</div>
+      <h3>Profissional</h3>
+      <p>Para quem quer crescer na carreira, mudar de área, desenvolver liderança ou superar bloqueios de desempenho. Clareza de propósito e ação estratégica.</p>
+    </div>
+    <div class="modalidade">
+      <div class="ico">👥</div>
+      <h3>Equipes</h3>
+      <p>Para gestores e empresas que querem elevar o desempenho coletivo, melhorar a comunicação interna e desenvolver uma cultura de alta performance.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="padding-top:0">
+  <div class="section-label">Como funciona</div>
+  <h2 class="section-title">Simples, direto e eficaz</h2>
+  <p class="section-sub">Do diagnóstico ao acompanhamento contínuo</p>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🔍</div><h3>Diagnóstico inicial</h3><p>Entendemos onde você está, onde quer chegar e quais são os bloqueios no caminho. Sem rodeios.</p></div>
+    <div class="card"><div class="card-icon">🗺️</div><h3>Plano personalizado</h3><p>Cada mentor cria um plano de ação único com metas claras, prazos realistas e ferramentas práticas.</p></div>
+    <div class="card"><div class="card-icon">📅</div><h3>Sessões regulares</h3><p>Encontros semanais ou quinzenais para acompanhar o progresso, ajustar o plano e manter o foco.</p></div>
+    <div class="card"><div class="card-icon">🤖</div><h3>Ferramentas com IA</h3><p>Integração com o Essencial Estudo — flashcards, cronograma, simulados e análise de desempenho.</p></div>
+    <div class="card"><div class="card-icon">📊</div><h3>Acompanhamento de métricas</h3><p>Evolução mensurável com indicadores reais — não apenas percepção, mas dados concretos de progresso.</p></div>
+    <div class="card"><div class="card-icon">🧠</div><h3>Mentalidade de alta performance</h3><p>Trabalhamos também o lado emocional — gestão da ansiedade, consistência e resiliência nos momentos difíceis.</p></div>
+  </div>
+</div>
+
+<div class="cta-box">
+  <h2>Pronto para acelerar sua evolução?</h2>
+  <p>Agende uma sessão gratuita de diagnóstico e descubra como a mentoria pode transformar seus resultados.</p>
+  <div class="tags">
+    <span class="tag">🎯 Individual & Grupo</span>
+    <span class="tag">📈 Carreira</span>
+    <span class="tag">🎓 Estudantes</span>
+    <span class="tag">👥 Equipes</span>
+    <span class="tag">🤖 IA integrada</span>
+  </div>
+  <a href="https://wa.me/5561985272681" class="btn-primary">Agendar sessão gratuita →</a>
+</div>
+
+<footer>
+  <div class="footer-logo">Essencial Digital</div>
+  <p>Tecnologia que transforma vidas — feita no Brasil para o Brasil</p>
+  <div class="footer-links">
+    <a href="https://essencialestudo.com.br">Essencial Estudo</a>
+    <a href="rh.html">RH Essencial Digital</a>
+    <a href="agro.html">Essencial Agro</a>
+    <a href="index.html">Todos os produtos</a>
+    <a href="https://wa.me/5561985272681">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2026 Essencial Digital · Alana Carvalho · CNPJ 58.062.495/0001-63</div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('universo');
+  const ctx = canvas.getContext('2d');
+
+  function ajustarCanvas() {
+    const size = window.innerWidth < 480 ? 300 : 420;
+    canvas.width = size; canvas.height = size;
+  }
+  ajustarCanvas();
+  window.addEventListener('resize', ajustarCanvas);
+
+  const ferramentas = [
+    { label: '🎯', nome: 'Foco',      cor: '#fdba74', vel: 0.007, ang: 0 },
+    { label: '🗺️', nome: 'Plano',     cor: '#fb923c', vel: 0.007, ang: Math.PI * 2/6 },
+    { label: '📊', nome: 'Métricas',  cor: '#fdba74', vel: 0.007, ang: Math.PI * 4/6 },
+    { label: '🧠', nome: 'Mentalid.', cor: '#fb923c', vel: 0.007, ang: Math.PI * 6/6 },
+    { label: '💼', nome: 'Carreira',  cor: '#fdba74', vel: 0.007, ang: Math.PI * 8/6 },
+    { label: '🤖', nome: 'IA',        cor: '#fb923c', vel: 0.007, ang: Math.PI * 10/6 },
+  ];
+
+  const estrelas = Array.from({ length: 120 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.2, op: Math.random(),
+    vel: 0.003 + Math.random() * 0.01,
+  }));
+
+  const particulas = Array.from({ length: 40 }, criarParticula);
+  function criarParticula() {
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 20 + Math.random() * 80;
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    return {
+      x: cx + Math.cos(ang) * dist, y: cy + Math.sin(ang) * dist,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 2,
+      cor: ['#fdba74','#fb923c','#f97316','#fed7aa','#fff7ed'][Math.floor(Math.random()*5)],
+      vida: 0, maxVida: 80 + Math.random() * 120,
+    };
+  }
+
+  function desenharNucleo(cx, cy, t) {
+    const pulso = 1 + 0.15 * Math.sin(t * 0.05);
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55 * pulso);
+    grad.addColorStop(0, 'rgba(194,65,12,0.4)');
+    grad.addColorStop(0.5, 'rgba(251,146,60,0.2)');
+    grad.addColorStop(1, 'rgba(194,65,12,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, 55 * pulso, 0, Math.PI * 2);
+    ctx.fillStyle = grad; ctx.fill();
+
+    const g2 = ctx.createLinearGradient(cx-28, cy-28, cx+28, cy+28);
+    g2.addColorStop(0, '#c2410c'); g2.addColorStop(1, '#fb923c');
+    ctx.beginPath(); ctx.roundRect(cx-28, cy-28, 56, 56, 16);
+    ctx.fillStyle = g2; ctx.shadowColor = '#fdba74'; ctx.shadowBlur = 30;
+    ctx.fill(); ctx.shadowBlur = 0;
+
+    ctx.font = '22px serif'; ctx.fillStyle = 'white';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('🎯', cx, cy);
+  }
+
+  function desenharOrbita(cx, cy, raio) {
+    ctx.beginPath(); ctx.arc(cx, cy, raio, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]); ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function desenharConexoes(posicoes, cx, cy) {
+    posicoes.forEach((p, i) => {
+      posicoes.forEach((q, j) => {
+        if (j <= i) return;
+        const dist = Math.hypot(p.x - q.x, p.y - q.y);
+        if (dist < 150) {
+          const op = (1 - dist / 150) * 0.3;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(253,186,116,${op})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      });
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p.x, p.y);
+      const op2 = 0.08 + 0.06 * Math.sin(Date.now() * 0.002 + i);
+      ctx.strokeStyle = `rgba(255,255,255,${op2})`; ctx.lineWidth = 0.5; ctx.stroke();
+    });
+  }
+
+  function desenharItem(p, x, y) {
+    const halo = ctx.createRadialGradient(x, y, 0, x, y, 28);
+    halo.addColorStop(0, p.cor + '55'); halo.addColorStop(1, p.cor + '00');
+    ctx.beginPath(); ctx.arc(x, y, 28, 0, Math.PI * 2);
+    ctx.fillStyle = halo; ctx.fill();
+
+    ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#0d0d1a'; ctx.fill();
+    ctx.strokeStyle = p.cor; ctx.lineWidth = 2;
+    ctx.shadowColor = p.cor; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
+
+    ctx.font = '14px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(p.label, x, y);
+    ctx.font = 'bold 9px Segoe UI'; ctx.fillStyle = p.cor; ctx.textAlign = 'center';
+    ctx.fillText(p.nome, x, y + 30);
+  }
+
+  let t = 0;
+  function animar() {
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const raio = W < 350 ? 95 : 130;
+    ctx.clearRect(0, 0, W, H); t++;
+
+    estrelas.forEach(s => {
+      s.op += s.vel * (Math.random() > 0.5 ? 1 : -1);
+      s.op = Math.max(0.05, Math.min(0.8, s.op));
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.op})`; ctx.fill();
+    });
+
+    for (let i = 0; i < particulas.length; i++) {
+      const p = particulas[i]; p.vida++;
+      p.x += p.vx; p.y += p.vy;
+      const fade = p.vida < 20 ? p.vida/20 : p.vida > p.maxVida-20 ? (p.maxVida-p.vida)/20 : 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.cor + Math.floor(fade*180).toString(16).padStart(2,'0');
+      ctx.fill();
+      if (p.vida >= p.maxVida) particulas[i] = criarParticula();
+    }
+
+    desenharOrbita(cx, cy, raio);
+
+    const posicoes = ferramentas.map(p => {
+      p.ang += p.vel;
+      return { x: cx + Math.cos(p.ang) * raio, y: cy + Math.sin(p.ang) * raio, ...p };
+    });
+
+    desenharConexoes(posicoes, cx, cy);
+    posicoes.forEach(p => desenharItem(p, p.x, p.y));
+    desenharNucleo(cx, cy, t);
+    requestAnimationFrame(animar);
+  }
+  animar();
+</script>
+</body>
+</html>

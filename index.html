@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essencial Digital | Tecnologia que transforma</title>
+<meta name="description" content="Ecossistema de tecnologia educacional e de gestão. Essencial Estudo, Teens, Med, Jurídico e RH Essencial Digital.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #08080f; color: white; overflow-x: hidden; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(236,72,153,0.2) 0%, transparent 50%),
+                #08080f;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 20px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    padding: 12px 28px; border-radius: 50px; font-size: 1rem;
+    font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.9); margin-bottom: 32px;
+    box-shadow: 0 0 24px rgba(124,58,237,0.2);
+  }
+  .badge span { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ANIMAÇÃO CANVAS */
+  #universo { display: block; margin: 0 auto 48px; }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #c084fc 40%, #4ade80 70%, #fbbf24 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.2rem); opacity: 0.6; max-width: 560px;
+    line-height: 1.7; margin-bottom: 48px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 800; font-size: 0.95rem; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,58,237,0.5); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+  /* STATS */
+  .stats {
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    padding: 48px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-size: 2rem; font-weight: 900; color: #c084fc; }
+  .stat-item .label { font-size: 0.78rem; opacity: 0.5; margin-top: 4px; }
+
+  /* PRODUTOS */
+  .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    text-align: center; font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.4; margin-bottom: 16px;
+  }
+  .section-title {
+    text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900; margin-bottom: 12px;
+  }
+  .section-sub { text-align: center; opacity: 0.5; font-size: 1rem; margin-bottom: 56px; }
+
+  .produtos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .produto-card {
+    border-radius: 24px; padding: 32px; position: relative; overflow: hidden;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.3s, border-color 0.3s;
+    text-decoration: none; color: white; display: block;
+  }
+  .produto-card:hover { transform: translateY(-6px); }
+  .produto-card::before {
+    content: ''; position: absolute; inset: 0; opacity: 0.06;
+    transition: opacity 0.3s;
+  }
+  .produto-card:hover::before { opacity: 0.1; }
+
+  .produto-card.estudo { border-color: rgba(124,58,237,0.3); }
+  .produto-card.estudo::before { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+  .produto-card.estudo:hover { border-color: rgba(124,58,237,0.6); }
+
+  .produto-card.teens { border-color: rgba(236,72,153,0.3); }
+  .produto-card.teens::before { background: linear-gradient(135deg, #ec4899, #f59e0b); }
+  .produto-card.teens:hover { border-color: rgba(236,72,153,0.6); }
+
+  .produto-card.med { border-color: rgba(16,185,129,0.3); }
+  .produto-card.med::before { background: linear-gradient(135deg, #059669, #10b981); }
+  .produto-card.med:hover { border-color: rgba(16,185,129,0.6); }
+
+  .produto-card.juridico { border-color: rgba(245,158,11,0.3); }
+  .produto-card.juridico::before { background: linear-gradient(135deg, #b45309, #f59e0b); }
+  .produto-card.juridico:hover { border-color: rgba(245,158,11,0.6); }
+
+  .produto-card.rh { border-color: rgba(59,130,246,0.3); }
+  .produto-card.rh::before { background: linear-gradient(135deg, #2563eb, #7c3aed); }
+  .produto-card.rh:hover { border-color: rgba(59,130,246,0.6); }
+
+  .produto-card.agro { border-color: rgba(34,197,94,0.3); }
+  .produto-card.agro::before { background: linear-gradient(135deg, #15803d, #22c55e); }
+  .produto-card.agro:hover { border-color: rgba(34,197,94,0.6); }
+
+  .produto-card.mentoria { border-color: rgba(251,146,60,0.3); }
+  .produto-card.mentoria::before { background: linear-gradient(135deg, #c2410c, #fb923c); }
+  .produto-card.mentoria:hover { border-color: rgba(251,146,60,0.6); }
+
+  .card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .card-tag {
+    display: inline-block; font-size: 0.65rem; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 50px; margin-bottom: 14px;
+  }
+  .card-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }
+  .card-desc { font-size: 0.85rem; opacity: 0.6; line-height: 1.6; margin-bottom: 20px; }
+  .card-publico { font-size: 0.75rem; opacity: 0.4; font-weight: 600; margin-bottom: 20px; }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800;
+    opacity: 0.8; transition: opacity 0.2s;
+  }
+  .produto-card:hover .card-link { opacity: 1; }
+
+  /* PARA ESCOLAS */
+  .escolas-section {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(16,185,129,0.1));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px; padding: 56px 48px; margin: 0 20px 80px;
+    max-width: 1060px; margin-left: auto; margin-right: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .escolas-section h2 { font-size: 2rem; font-weight: 900; margin-bottom: 16px; }
+  .escolas-section p { opacity: 0.6; line-height: 1.7; margin-bottom: 24px; }
+  .escolas-lista { display: flex; flex-direction: column; gap: 12px; }
+  .escolas-item { display: flex; gap: 12px; align-items: flex-start; }
+  .escolas-item .ico {
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .escolas-item p { font-size: 0.85rem; opacity: 0.7; line-height: 1.5; }
+  .escolas-item strong { color: white; opacity: 1; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 20px; text-align: center;
+  }
+  .footer-logo { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px;
+    background: linear-gradient(135deg, #c084fc, #4ade80);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  footer p { opacity: 0.3; font-size: 0.82rem; margin-bottom: 24px; }
+  .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+  .footer-links a { color: rgba(255,255,255,0.4); font-size: 0.82rem; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: white; }
+  .footer-copy { font-size: 0.72rem; opacity: 0.2; }
+
+  @media (max-width: 768px) {
+    .escolas-section { grid-template-columns: 1fr; padding: 32px 24px; gap: 32px; }
+    .stats { gap: 28px; padding: 36px 20px; }
+    .stat-item .num { font-size: 1.6rem; }
+    .section { padding: 56px 16px; }
+    .produtos-grid { grid-template-columns: 1fr; gap: 14px; }
+    .hero { padding: 60px 16px 48px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+    #universo { width: 300px !important; height: 300px !important; }
+    .footer-links { gap: 16px; }
+    .escolas-section a.btn-primary { width: 100%; text-align: center; display: block; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">
+    <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" style="border-radius:8px;flex-shrink:0">
+      <defs>
+        <linearGradient id="eg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7c3aed"/>
+          <stop offset="100%" stop-color="#ec4899"/>
+        </linearGradient>
+      </defs>
+      <rect width="28" height="28" rx="8" fill="url(#eg)"/>
+      <!-- digital no fundo -->
+      <g stroke="rgba(255,255,255,0.2)" stroke-width="0.8" fill="none" stroke-linecap="round">
+        <path d="M14,4 Q20,4 22,10 Q24,16 22,22 Q20,26 14,26"/>
+        <path d="M14,6 Q19,6 21,11 Q23,16 21,21 Q19,24 14,24"/>
+        <path d="M14,8 Q18,8 20,12 Q21,16 20,20 Q18,22 14,22"/>
+        <path d="M14,10 Q17,10 18,13 Q19,16 18,19 Q17,21 14,21"/>
+        <path d="M14,12 Q16,12 17,14 Q17.5,16 17,18 Q16,19 14,19"/>
+      </g>
+      <!-- barra vertical -->
+      <rect x="6" y="6" width="4" height="16" rx="1.5" fill="white"/>
+      <!-- barra superior -->
+      <rect x="6" y="6" width="14" height="4" rx="1.5" fill="white"/>
+      <!-- barra do meio (mais curta) -->
+      <rect x="6" y="12" width="11" height="4" rx="1.5" fill="white"/>
+      <!-- barra inferior -->
+      <rect x="6" y="18" width="14" height="4" rx="1.5" fill="white"/>
+    </svg>
+    <span></span> Ecossistema Essencial Digital
+  </div>
+
+  <!-- ANIMAÇÃO UNIVERSO -->
+  <canvas id="universo" width="420" height="420"></canvas>
+
+  <h1>Tecnologia que<br>transforma vidas</h1>
+  <p>Plataformas de educação e gestão com inteligência artificial. Do estudante ao profissional, do aluno ao gestor de RH.</p>
+  <div class="hero-btns">
+    <a href="#produtos" class="btn-primary">Conheça nossos produtos</a>
+    <a href="https://wa.me/5561985272681" class="btn-secondary">💬 Falar com a equipe</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="num">6</div>
+    <div class="label">Produtos ativos</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">50+</div>
+    <div class="label">Ferramentas com IA</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">100%</div>
+    <div class="label">Feito no Brasil</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">LGPD</div>
+    <div class="label">Em conformidade</div>
+  </div>
+</div>
+
+<!-- PRODUTOS -->
+<div class="section" id="produtos">
+  <div class="section-label">Nosso ecossistema</div>
+  <h2 class="section-title">Uma solução para cada desafio</h2>
+  <p class="section-sub">Produtos independentes, integrados pela mesma missão: tornar o essencial acessível.</p>
+
+  <div class="produtos-grid">
+
+    <a href="https://essencialestudo.com.br" class="produto-card estudo">
+      <div class="card-icon">📚</div>
+      <div class="card-tag" style="background:rgba(124,58,237,0.2); color:#c084fc;">Educação</div>
+      <div class="card-title">Essencial Estudo</div>
+      <div class="card-desc">Plataforma de estudos com IA personalizada para ENEM, concursos, militar e muito mais. Mais de 50 ferramentas em um único app.</div>
+      <div class="card-publico">Para estudantes do ensino médio ao pós-graduação</div>
+      <div style="margin:10px 0 14px; font-size:0.82rem; font-weight:800; color:#c084fc;">R$37/mês &nbsp;·&nbsp; R$297/ano</div>
+      <div class="card-link" style="color:#c084fc;">Acessar app →</div>
+    </a>
+
+    <a href="https://essencialestudo.com.br/teens" class="produto-card teens">
+      <div class="card-icon">⚡</div>
+      <div class="card-tag" style="background:rgba(236,72,153,0.2); color:#f9a8d4;">Educação</div>
+      <div class="card-title">Essencial Teens</div>
+      <div class="card-desc">Plataforma de estudos gamificada para alunos do 7º ao 9º ano. IA personalizada, engajamento real e painel para coordenadores.</div>
+      <div class="card-publico">Para escolas e alunos de 12 a 15 anos</div>
+      <div style="margin:10px 0 14px; font-size:0.82rem; font-weight:800; color:#f9a8d4;">R$29,90/mês &nbsp;·&nbsp; R$249/ano</div>
+      <div class="card-link" style="color:#f9a8d4;">Acessar app →</div>
+    </a>
+
+    <a href="https://essencialestudo.com.br/med" class="produto-card med">
+      <div class="card-icon">🩺</div>
+      <div class="card-tag" style="background:rgba(16,185,129,0.2); color:#6ee7b7;">Saúde</div>
+      <div class="card-title">Essencial Med</div>
+      <div class="card-desc">Preparação para Residência Médica com memorização avançada, simulados por especialidade e assistente IA especializado.</div>
+      <div class="card-publico">Para candidatos à Residência Médica</div>
+      <div style="margin:10px 0 14px; font-size:0.82rem; font-weight:800; color:#6ee7b7;">R$69,90/mês &nbsp;·&nbsp; R$597/ano</div>
+      <div class="card-link" style="color:#6ee7b7;">Acessar app →</div>
+    </a>
+
+    <a href="https://essencialestudo.com.br/juridico" class="produto-card juridico">
+      <div class="card-icon">⚖️</div>
+      <div class="card-tag" style="background:rgba(245,158,11,0.2); color:#fcd34d;">Direito</div>
+      <div class="card-title">Essencial Jurídico</div>
+      <div class="card-desc">Aprovação na OAB 1ª e 2ª fase com legislação, jurisprudência, simulados por disciplina e IA que domina o universo jurídico.</div>
+      <div class="card-publico">Para candidatos à OAB</div>
+      <div style="margin:10px 0 14px; font-size:0.82rem; font-weight:800; color:#fcd34d;">R$69,90/mês &nbsp;·&nbsp; R$597/ano</div>
+      <div class="card-link" style="color:#fcd34d;">Acessar app →</div>
+    </a>
+
+    <a href="rh.html" class="produto-card rh">
+      <div class="card-icon">👥</div>
+      <div class="card-tag" style="background:rgba(59,130,246,0.2); color:#93c5fd;">Gestão & Desenvolvimento</div>
+      <div class="card-title">RH Essencial Digital</div>
+      <div class="card-desc">Sistema completo de gestão de RH para empresas e instituições. Colaboradores, formulários, relatórios, diagnósticos psicossociais e mentoria de equipes.</div>
+      <div class="card-publico">Para empresas, escolas e instituições</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+        <span style="background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); color:#93c5fd; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">🧠 Diagnóstico Psicossocial</span>
+        <span style="background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); color:#93c5fd; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">📋 NR-1</span>
+        <span style="background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); color:#93c5fd; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">🎯 Mentoria</span>
+      </div>
+      <div class="card-link" style="color:#93c5fd;">Saiba mais →</div>
+    </a>
+
+    <a href="agro.html" class="produto-card agro">
+      <div class="card-icon">🌿</div>
+      <div class="card-tag" style="background:rgba(34,197,94,0.2); color:#86efac;">Agronegócio</div>
+      <div class="card-title">Essencial Agro</div>
+      <div class="card-desc">Gestão inteligente para o campo. Controle de colaboradores, formulários rurais, diagnósticos psicossociais NR-1 e relatórios para propriedades e cooperativas.</div>
+      <div class="card-publico">Para propriedades rurais e cooperativas</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+        <span style="background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#86efac; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">🧠 Diagnóstico Psicossocial</span>
+        <span style="background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#86efac; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">📋 NR-1</span>
+      </div>
+      <div class="card-link" style="color:#86efac;">Saiba mais →</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- PARA ESCOLAS -->
+<div class="escolas-section">
+  <div>
+    <div class="section-label" style="text-align:left;">Solução completa</div>
+    <h2>Para sua <span style="background:linear-gradient(135deg,#c084fc,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">instituição de ensino</span></h2>
+    <p>A Essencial Digital oferece tecnologia para toda a sua escola em um único parceiro. Seus alunos estudam melhor, sua equipe trabalha melhor.</p>
+    <a href="https://wa.me/5561985272681" class="btn-primary" style="display:inline-block;">Agendar demonstração →</a>
+    <button onclick="abrirPrecos()" title="Ver tabela de preços" style="margin-top:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:50px; font-size:0.72rem; font-weight:700; color:rgba(255,255,255,0.35); letter-spacing:0.05em;">🔒 Tabela institucional</button>
+  </div>
+  <div class="escolas-lista">
+    <div class="escolas-item">
+      <div class="ico" style="background:rgba(124,58,237,0.2);">📚</div>
+      <p><strong>Essencial Estudo ou Teens</strong> para seus alunos — cronograma com IA, simulados, gamificação e painel de desempenho para coordenadores</p>
+    </div>
+    <div class="escolas-item">
+      <div class="ico" style="background:rgba(59,130,246,0.2);">👥</div>
+      <p><strong>RH Essencial Digital</strong> para sua equipe administrativa — gestão de colaboradores, formulários digitais e relatórios automáticos</p>
+    </div>
+    <div class="escolas-item">
+      <div class="ico" style="background:rgba(16,185,129,0.2);">🛡️</div>
+      <p><strong>100% LGPD</strong> — dados de alunos e funcionários protegidos com criptografia e consentimento integrado</p>
+    </div>
+    <div class="escolas-item">
+      <div class="ico" style="background:rgba(245,158,11,0.2);">🤝</div>
+      <p><strong>Suporte dedicado</strong> — implantação assistida, treinamento da equipe e acompanhamento contínuo</p>
+    </div>
+  </div>
+</div>
+
+<!-- FUNDADORA -->
+<div style="max-width:860px; margin:0 auto 80px; padding:0 20px;">
+  <div style="background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(236,72,153,0.08)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; padding:48px 48px; display:flex; align-items:center; gap:40px; flex-wrap:wrap;">
+    <div style="width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#ec4899); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 40px rgba(124,58,237,0.4);">
+      <span style="font-family:'Georgia',serif; font-size:2rem; font-weight:700; color:white; letter-spacing:-2px; font-style:italic;">AC</span>
+    </div>
+    <div style="flex:1; min-width:220px;">
+      <p style="font-size:0.7rem; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:#c084fc; opacity:0.8; margin-bottom:8px;">Fundadora</p>
+      <h3 style="font-size:1.8rem; font-weight:900; margin-bottom:10px; background:linear-gradient(135deg,#fff,#c084fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Alana Carvalho</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span style="background:rgba(124,58,237,0.2); border:1px solid rgba(124,58,237,0.3); color:#c084fc; font-size:0.75rem; font-weight:700; padding:4px 14px; border-radius:50px;">Gestora de Pessoas</span>
+        <span style="background:rgba(236,72,153,0.2); border:1px solid rgba(236,72,153,0.3); color:#f9a8d4; font-size:0.75rem; font-weight:700; padding:4px 14px; border-radius:50px;">Especialista em Psicologia Organizacional</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.3); color:#6ee7b7; font-size:0.75rem; font-weight:700; padding:4px 14px; border-radius:50px;">Criadora LGPD</span>
+      </div>
+    </div>
+    <a href="https://wa.me/5561985272681" style="background:linear-gradient(135deg,#7c3aed,#ec4899); color:white; padding:12px 24px; border-radius:14px; font-weight:800; font-size:0.88rem; text-decoration:none; white-space:nowrap; box-shadow:0 8px 24px rgba(124,58,237,0.4);">📩 Entre em contato</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Essencial Digital</div>
+  <p>Tecnologia que transforma vidas — feita no Brasil para o Brasil</p>
+  <div class="footer-links">
+    <a href="https://essencialestudo.com.br/apresentacao">Essencial Estudo</a>
+    <a href="https://essencialestudo.com.br/teens">Essencial Teens</a>
+    <a href="https://essencialestudo.com.br/med">Essencial Med</a>
+    <a href="https://essencialestudo.com.br/juridico">Essencial Jurídico</a>
+    <a href="https://wa.me/5561985272681">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2026 Essencial Digital · Alana Carvalho · CNPJ 58.062.495/0001-63 · essencialdigital2@gmail.com</div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ── ANIMAÇÃO UNIVERSO ──
+  const canvas = document.getElementById('universo');
+  const ctx = canvas.getContext('2d');
+
+  function ajustarCanvas() {
+    const size = window.innerWidth < 480 ? 300 : 420;
+    canvas.width = size; canvas.height = size;
+  }
+  ajustarCanvas();
+  window.addEventListener('resize', ajustarCanvas);
+
+  const produtos = [
+    { label: '📚', nome: 'Estudo',    cor: '#c084fc', vel: 0.007, ang: Math.PI * 0/7 },
+    { label: '⚡', nome: 'Teens',     cor: '#f9a8d4', vel: 0.007, ang: Math.PI * 2/7 },
+    { label: '🩺', nome: 'Med',       cor: '#6ee7b7', vel: 0.007, ang: Math.PI * 4/7 },
+    { label: '⚖️', nome: 'Jurídico',  cor: '#fcd34d', vel: 0.007, ang: Math.PI * 6/7 },
+    { label: '👥', nome: 'RH',        cor: '#93c5fd', vel: 0.007, ang: Math.PI * 8/7 },
+    { label: '🌿', nome: 'Agro',      cor: '#86efac', vel: 0.007, ang: Math.PI * 10/7 },
+    { label: '🎯', nome: 'Mentoria',  cor: '#fdba74', vel: 0.007, ang: Math.PI * 12/7 },
+  ];
+
+  const estrelas = Array.from({ length: 120 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.2, op: Math.random(),
+    vel: 0.003 + Math.random() * 0.01,
+  }));
+
+  const particulas = Array.from({ length: 40 }, criarParticula);
+  function criarParticula() {
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 20 + Math.random() * 80;
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    return {
+      x: cx + Math.cos(ang) * dist, y: cy + Math.sin(ang) * dist,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 2, op: Math.random(),
+      cor: ['#c084fc','#ec4899','#4ade80','#fbbf24','#93c5fd'][Math.floor(Math.random()*5)],
+      vida: 0, maxVida: 80 + Math.random() * 120,
+    };
+  }
+
+  function desenharNucleo(cx, cy, t) {
+    const pulso = 1 + 0.15 * Math.sin(t * 0.05);
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55 * pulso);
+    grad.addColorStop(0, 'rgba(236,72,153,0.4)');
+    grad.addColorStop(0.5, 'rgba(124,58,237,0.2)');
+    grad.addColorStop(1, 'rgba(124,58,237,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, 55 * pulso, 0, Math.PI * 2);
+    ctx.fillStyle = grad; ctx.fill();
+
+    const g2 = ctx.createLinearGradient(cx-32, cy-32, cx+32, cy+32);
+    g2.addColorStop(0, '#7c3aed'); g2.addColorStop(1, '#ec4899');
+    ctx.beginPath(); ctx.roundRect(cx-32, cy-32, 64, 64, 18);
+    ctx.fillStyle = g2; ctx.shadowColor = '#c084fc'; ctx.shadowBlur = 36;
+    ctx.fill(); ctx.shadowBlur = 0;
+
+    // Digital animada — se formando progressivamente
+    ctx.save();
+    ctx.lineWidth = 1.2; ctx.lineCap = 'round';
+
+    // Ciclo de 300 frames: 0-200 formando, 200-260 visível, 260-300 apagando
+    const ciclo = 300;
+    const fase = t % ciclo;
+    const progresso = fase < 200 ? fase / 200 : fase < 260 ? 1 : 1 - (fase - 260) / 40;
+    const totalLinhas = 12; // 7 arcos + 5 verticais
+
+    // Arcos concêntricos
+    for (let i = 1; i <= 7; i++) {
+      const linhaIdx = i - 1;
+      const linhaProgress = Math.max(0, Math.min(1, (progresso * totalLinhas - linhaIdx)));
+      if (linhaProgress <= 0) continue;
+
+      const ri = i * 4.2;
+      const startA = Math.PI * 0.85;
+      const endA   = Math.PI * 2.15;
+      const arcLen = ri * (endA - startA);
+
+      ctx.strokeStyle = `rgba(255,255,255,${0.55 * linhaProgress})`;
+      ctx.setLineDash([arcLen * linhaProgress, arcLen]);
+      ctx.lineDashOffset = 0;
+      ctx.beginPath();
+      ctx.arc(cx, cy + 2, ri, startA, endA);
+      ctx.stroke();
+    }
+
+    // Linhas verticais
+    for (let i = 0; i < 5; i++) {
+      const linhaIdx = 7 + i;
+      const linhaProgress = Math.max(0, Math.min(1, (progresso * totalLinhas - linhaIdx)));
+      if (linhaProgress <= 0) continue;
+
+      const off = (i - 2) * 5.5;
+      const totalLen = 56;
+      ctx.strokeStyle = `rgba(255,255,255,${0.55 * linhaProgress})`;
+      ctx.setLineDash([totalLen * linhaProgress, totalLen]);
+      ctx.lineDashOffset = 0;
+      ctx.beginPath();
+      ctx.moveTo(cx + off, cy - 26);
+      ctx.bezierCurveTo(cx + off - 2, cy - 10, cx + off + 2, cy + 10, cx + off, cy + 28);
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // "E" em barras — estilo logo moderno com gradiente
+    ctx.save();
+    ctx.shadowColor = 'rgba(255,255,255,0.6)'; ctx.shadowBlur = 10;
+
+    const gE = ctx.createLinearGradient(cx - 14, cy - 18, cx + 14, cy + 18);
+    gE.addColorStop(0, '#fff');
+    gE.addColorStop(1, 'rgba(255,255,255,0.75)');
+    ctx.fillStyle = gE;
+
+    const bx = cx - 13, by = cy - 18; // origem top-left do E
+    const bw = 26, bh = 36;           // largura total, altura total
+    const t2 = 5;                      // espessura das barras horizontais
+    const vw = 5;                      // espessura da barra vertical
+    const r = 2;                       // raio dos cantos
+
+    // Barra vertical (esquerda)
+    ctx.beginPath(); ctx.roundRect(bx, by, vw, bh, r); ctx.fill();
+    // Barra superior
+    ctx.beginPath(); ctx.roundRect(bx, by, bw, t2, r); ctx.fill();
+    // Barra do meio — ligeiramente mais curta (80%)
+    ctx.beginPath(); ctx.roundRect(bx, by + bh/2 - t2/2, bw * 0.8, t2, r); ctx.fill();
+    // Barra inferior
+    ctx.beginPath(); ctx.roundRect(bx, by + bh - t2, bw, t2, r); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function desenharOrbita(cx, cy, raio) {
+    ctx.beginPath(); ctx.arc(cx, cy, raio, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]); ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function desenharConexoes(posicoes, cx, cy) {
+    posicoes.forEach((p, i) => {
+      posicoes.forEach((q, j) => {
+        if (j <= i) return;
+        const dist = Math.hypot(p.x - q.x, p.y - q.y);
+        if (dist < 150) {
+          const op = (1 - dist / 150) * 0.3;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(192,132,252,${op})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      });
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p.x, p.y);
+      const op2 = 0.08 + 0.06 * Math.sin(Date.now() * 0.002 + i);
+      ctx.strokeStyle = `rgba(255,255,255,${op2})`; ctx.lineWidth = 0.5; ctx.stroke();
+    });
+  }
+
+  function desenharProduto(p, x, y) {
+    const halo = ctx.createRadialGradient(x, y, 0, x, y, 42);
+    halo.addColorStop(0, p.cor + '55'); halo.addColorStop(1, p.cor + '00');
+    ctx.beginPath(); ctx.arc(x, y, 42, 0, Math.PI * 2);
+    ctx.fillStyle = halo; ctx.fill();
+
+    ctx.beginPath(); ctx.arc(x, y, 26, 0, Math.PI * 2);
+    ctx.fillStyle = '#0d0d1a'; ctx.fill();
+    ctx.strokeStyle = p.cor; ctx.lineWidth = 2.5;
+    ctx.shadowColor = p.cor; ctx.shadowBlur = 16; ctx.stroke(); ctx.shadowBlur = 0;
+
+    ctx.font = '20px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(p.label, x, y);
+    ctx.font = 'bold 10px Segoe UI'; ctx.fillStyle = p.cor; ctx.textAlign = 'center';
+    ctx.fillText(p.nome, x, y + 38);
+  }
+
+  let t = 0;
+  function animar() {
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const raio = W < 350 ? 110 : 155;
+    ctx.clearRect(0, 0, W, H); t++;
+
+    estrelas.forEach(s => {
+      s.op += s.vel * (Math.random() > 0.5 ? 1 : -1);
+      s.op = Math.max(0.05, Math.min(0.8, s.op));
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.op})`; ctx.fill();
+    });
+
+    for (let i = 0; i < particulas.length; i++) {
+      const p = particulas[i]; p.vida++;
+      p.x += p.vx; p.y += p.vy;
+      const fade = p.vida < 20 ? p.vida/20 : p.vida > p.maxVida-20 ? (p.maxVida-p.vida)/20 : 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.cor + Math.floor(fade*180).toString(16).padStart(2,'0');
+      ctx.fill();
+      if (p.vida >= p.maxVida) particulas[i] = criarParticula();
+    }
+
+    desenharOrbita(cx, cy, raio);
+
+    const posicoes = produtos.map(p => {
+      p.ang += p.vel;
+      return { x: cx + Math.cos(p.ang) * raio, y: cy + Math.sin(p.ang) * raio, ...p };
+    });
+
+    desenharConexoes(posicoes, cx, cy);
+    posicoes.forEach(p => desenharProduto(p, p.x, p.y));
+    desenharNucleo(cx, cy, t);
+    requestAnimationFrame(animar);
+  }
+  animar();
+
+  // ── Modal de preços institucionais com senha ──────────────────────────
+  function abrirPrecos() {
+    document.getElementById('modal-precos').style.display = 'flex';
+    setTimeout(() => document.getElementById('input-senha').focus(), 100);
+  }
+  function fecharPrecos() {
+    document.getElementById('modal-precos').style.display = 'none';
+    document.getElementById('painel-senha').style.display = 'flex';
+    document.getElementById('painel-tabela').style.display = 'none';
+    document.getElementById('input-senha').value = '';
+    document.getElementById('erro-senha').style.display = 'none';
+  }
+  function verificarSenha() {
+    const v = document.getElementById('input-senha').value;
+    if (v === 'essencial') {
+      document.getElementById('painel-senha').style.display = 'none';
+      document.getElementById('painel-tabela').style.display = 'block';
+    } else {
+      document.getElementById('erro-senha').style.display = 'block';
+      document.getElementById('input-senha').value = '';
+      document.getElementById('input-senha').focus();
+    }
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharPrecos();
+  });
+</script>
+
+<!-- MODAL PREÇOS INSTITUCIONAIS -->
+<div id="modal-precos" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px);">
+  <div style="background:#0f0f1a; border:1px solid rgba(255,255,255,0.1); border-radius:28px; max-width:820px; width:100%; max-height:90vh; overflow-y:auto; position:relative; padding:48px;">
+    <button onclick="fecharPrecos()" style="position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.4); font-size:1.5rem; cursor:pointer; line-height:1;">✕</button>
+
+    <!-- PAINEL SENHA -->
+    <div id="painel-senha" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:200px; gap:20px; text-align:center;">
+      <div style="font-size:3rem;">🔒</div>
+      <h3 style="font-size:1.4rem; font-weight:900; color:white;">Tabela de Preços Institucionais</h3>
+      <p style="color:rgba(255,255,255,0.4); font-size:0.9rem;">Área restrita — apenas para apresentações comerciais</p>
+      <div style="display:flex; gap:10px; width:100%; max-width:340px;">
+        <input id="input-senha" type="password" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')verificarSenha()"
+          style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:12px 16px; color:white; font-size:1rem; outline:none;" />
+        <button onclick="verificarSenha()"
+          style="background:linear-gradient(135deg,#7c3aed,#ec4899); color:white; border:none; border-radius:12px; padding:12px 20px; font-weight:800; cursor:pointer;">Entrar</button>
+      </div>
+      <p id="erro-senha" style="display:none; color:#f87171; font-size:0.83rem;">Senha incorreta. Tente novamente.</p>
+    </div>
+
+    <!-- PAINEL TABELA (oculto até senha correta) -->
+    <div id="painel-tabela" style="display:none;">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:36px;">
+        <div>
+          <p style="font-size:0.7rem; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:#c084fc; margin-bottom:6px;">Tabela Comercial 2026</p>
+          <h2 style="font-size:1.8rem; font-weight:900; background:linear-gradient(135deg,#fff,#c084fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Preços para Instituições</h2>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onclick="abrirPropostaEstudo()"
+            style="background:linear-gradient(135deg,#7c3aed,#a855f7); color:white; border:none; border-radius:14px; padding:12px 20px; font-weight:800; font-size:0.85rem; cursor:pointer;">
+            📚 Proposta Estudo
+          </button>
+          <button onclick="abrirPropostaRH()"
+            style="background:linear-gradient(135deg,#1d4ed8,#3b82f6); color:white; border:none; border-radius:14px; padding:12px 20px; font-weight:800; font-size:0.85rem; cursor:pointer;">
+            👥 Proposta RH
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabela de pacotes -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:32px;">
+
+        <!-- ESTUDO -->
+        <div style="background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.3); border-radius:20px; padding:28px;">
+          <div style="font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#c084fc; margin-bottom:14px;">📚 Essencial Estudo / Teens</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Plano Turma <span style="color:rgba(255,255,255,0.45); font-weight:400;">(até 40 alunos)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">R$19,93 por aluno · contrato anual</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#c084fc;">R$797<span style="font-size:0.72rem; font-weight:600;">/mês</span></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Plano Escola <span style="color:rgba(255,255,255,0.45); font-weight:400;">(até 200 alunos)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">R$12,48 por aluno · contrato anual</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#c084fc;">R$2.497<span style="font-size:0.72rem; font-weight:600;">/mês</span></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Plano Rede <span style="color:rgba(255,255,255,0.45); font-weight:400;">(acima de 200 alunos)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">R$16,66 por aluno · múltiplas unidades</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#c084fc;">R$4.997<span style="font-size:0.72rem; font-weight:600;">/mês</span></div>
+            </div>
+          </div>
+          <div style="margin-top:14px; font-size:0.72rem; color:rgba(255,255,255,0.38); line-height:1.8;">
+            ✅ Painel do coordenador &nbsp;·&nbsp; ✅ IA personalizada<br>
+            ✅ Relatórios de desempenho &nbsp;·&nbsp; ✅ Suporte dedicado
+          </div>
+        </div>
+
+        <!-- RH -->
+        <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.3); border-radius:20px; padding:28px;">
+          <div style="font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#93c5fd; margin-bottom:14px;">👥 RH Essencial + Diagnóstico NR-1</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Essencial Start <span style="color:rgba(255,255,255,0.45); font-weight:400;">(mín. 10 colaboradores)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">diagnóstico NR-1 · gestão básica</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#93c5fd;">R$24,90<span style="font-size:0.72rem; font-weight:600;">/colab./mês</span></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Essencial Pro <span style="color:rgba(255,255,255,0.45); font-weight:400;">(dashboards + saúde mental)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">indicadores avançados · plano de ação automático</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#93c5fd;">R$34,90<span style="font-size:0.72rem; font-weight:600;">/colab./mês</span></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.78rem; font-weight:700; color:white;">Essencial Enterprise <span style="color:rgba(255,255,255,0.45); font-weight:400;">(consultoria + BI executivo)</span></div>
+                <div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">benchmarking · suporte prioritário</div>
+              </div>
+              <div style="font-size:1.25rem; font-weight:900; color:#93c5fd;">R$49,90<span style="font-size:0.72rem; font-weight:600;">/colab./mês</span></div>
+            </div>
+          </div>
+          <div style="margin-top:14px; font-size:0.72rem; color:rgba(255,255,255,0.38); line-height:1.8;">
+            ✅ Diagnóstico Psicossocial NR-1 &nbsp;·&nbsp; ✅ Laudos automáticos<br>
+            ✅ Gestão de colaboradores &nbsp;·&nbsp; ✅ Relatórios com IA
+          </div>
+        </div>
+
+      </div>
+
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:20px 24px; font-size:0.8rem; color:rgba(255,255,255,0.4); line-height:1.8;">
+        💡 <strong style="color:rgba(255,255,255,0.6);">Condições gerais:</strong> Contratos com duração mínima de 12 meses. Implantação e treinamento inclusos. Preços sujeitos a negociação para volumes acima de 200 alunos. Pagamento mensal ou anual com desconto.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPOSTAS IMPRESSAS (nova janela) -->
+<script>
+const _estiloBase = `
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; color:#111; background:#fff; }
+  .pagina { max-width:780px; margin:0 auto; padding:60px 48px; }
+  .header { display:flex; align-items:center; justify-content:space-between; margin-bottom:48px; padding-bottom:24px; border-bottom:2px solid #f3f0ff; }
+  .logo { font-size:1.6rem; font-weight:900; }
+  .header-info { text-align:right; font-size:0.8rem; color:#888; line-height:1.8; }
+  h1 { font-size:2rem; font-weight:900; color:#1a1a2e; margin-bottom:8px; }
+  .subtitulo { font-size:1rem; font-weight:700; margin-bottom:32px; }
+  .intro { font-size:0.92rem; color:#444; line-height:1.8; margin-bottom:40px; padding:16px 20px; border-radius:0 12px 12px 0; }
+  h2 { font-size:1.1rem; font-weight:900; color:#1a1a2e; margin-bottom:16px; margin-top:36px; text-transform:uppercase; letter-spacing:0.05em; }
+  .tabela { width:100%; border-collapse:collapse; margin-bottom:32px; }
+  .tabela th { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; font-weight:800; padding:10px 16px; text-align:left; }
+  .tabela td { padding:14px 16px; font-size:0.85rem; border-top:1px solid #f0f0f0; }
+  .tabela .preco { font-weight:900; font-size:1rem; }
+  .condicoes { background:#f8f8f8; border-radius:12px; padding:16px 20px; font-size:0.8rem; color:#666; line-height:1.8; margin-bottom:32px; }
+  .contato { border-radius:16px; padding:24px 28px; margin-bottom:40px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .contato h3 { font-size:1rem; font-weight:900; color:#1a1a2e; margin-bottom:4px; }
+  .contato p { font-size:0.82rem; color:#666; }
+  .contato .btn { color:white; padding:10px 20px; border-radius:10px; font-weight:800; font-size:0.85rem; text-decoration:none; }
+  .assinatura { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:48px; padding-top:32px; border-top:1px solid #eee; }
+  .ass-box { border-top:1px solid #bbb; padding-top:10px; font-size:0.78rem; color:#888; }
+  .ass-box strong { display:block; color:#333; margin-bottom:2px; font-size:0.85rem; }
+  footer { text-align:center; font-size:0.72rem; color:#bbb; margin-top:40px; padding-top:20px; border-top:1px solid #f0f0f0; }
+  @media print { .no-print { display:none !important; } }
+`;
+
+function _abrirJanela(html) {
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+function abrirPropostaEstudo() {
+  const hoje = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  _abrirJanela(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>Proposta Estudo — Essencial Digital</title>
+<style>${_estiloBase}
+  .logo { color:#7c3aed; }
+  .subtitulo { color:#7c3aed; }
+  .intro { background:#faf8ff; border-left:4px solid #7c3aed; }
+  .tabela th { background:#f3f0ff; color:#7c3aed; }
+  .tabela .preco { color:#7c3aed; }
+  .contato { border:2px solid #7c3aed; }
+  .contato .btn { background:linear-gradient(135deg,#7c3aed,#a855f7); }
+</style></head><body>
+<div class="pagina">
+  <div class="header">
+    <div>
+      <div class="logo">Essencial Digital</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;">Tecnologia que transforma vidas</div>
+    </div>
+    <div class="header-info"><strong>Proposta Comercial — Educação</strong><br>Data: ${hoje}<br>Validade: 30 dias<br>CNPJ: 58.062.495/0001-63</div>
+  </div>
+
+  <h1>Proposta Comercial</h1>
+  <div class="subtitulo">📚 Essencial Estudo / Teens — Licença Institucional</div>
+
+  <div class="intro">
+    A <strong>Essencial Digital</strong> oferece plataforma de estudos com IA para escolas e cursinhos, com painel do coordenador, relatórios de desempenho e suporte dedicado. Contrato por turma, sem cobrança por aluno.
+  </div>
+
+  <h2>📦 Tabela de Preços por Turma</h2>
+  <table class="tabela">
+    <thead><tr><th>Plano</th><th>Capacidade</th><th>Valor mensal</th><th>Anual (à vista)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Plano Turma</strong></td><td>até 40 alunos · R$19,93/aluno</td><td class="preco">R$ 797,00</td><td>R$ 8.607,60 <span style="font-size:0.72rem;color:#999;">(10% desc.)</span></td></tr>
+      <tr><td><strong>Plano Escola</strong></td><td>até 200 alunos · R$12,48/aluno</td><td class="preco">R$ 2.497,00</td><td>R$ 26.967,60 <span style="font-size:0.72rem;color:#999;">(10% desc.)</span></td></tr>
+      <tr><td><strong>Plano Rede</strong></td><td>acima de 200 alunos · múltiplas unidades</td><td class="preco">R$ 4.997,00</td><td>R$ 53.967,60 <span style="font-size:0.72rem;color:#999;">(10% desc.)</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="condicoes">
+    <strong>⚙️ Condições:</strong> Contrato mínimo de 12 meses. Implantação e treinamento inclusos. Pagamento mensal ou anual antecipado com 10% de desconto. Reajuste anual pelo IPCA. Suporte via WhatsApp em horário comercial.
+  </div>
+
+  <h2>✅ O que está incluso</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px;font-size:0.83rem;color:#444;">
+    <div>✓ Acesso completo à plataforma</div><div>✓ IA de estudo personalizada</div>
+    <div>✓ Painel do coordenador</div><div>✓ Relatórios de desempenho</div>
+    <div>✓ Flashcards e simulados</div><div>✓ Cronograma inteligente</div>
+    <div>✓ Notificações e lembretes</div><div>✓ Suporte dedicado</div>
+  </div>
+
+  <h2>📞 Próximos Passos</h2>
+  <div class="contato">
+    <div>
+      <h3>Alana Carvalho — Fundadora</h3>
+      <p>Especialista em Psicologia Organizacional e Gestão de Pessoas</p>
+      <p style="margin-top:6px;">📱 (61) 98527-2681 &nbsp;·&nbsp; 📧 essencialdigital2@gmail.com</p>
+    </div>
+    <a href="https://wa.me/5561985272681" class="btn">Agendar reunião →</a>
+  </div>
+
+  <div class="assinatura">
+    <div class="ass-box"><strong>Essencial Digital</strong>Alana Carvalho — Fundadora<br>CNPJ: 58.062.495/0001-63</div>
+    <div class="ass-box"><strong>Instituição / Responsável</strong>&nbsp;<br>Data: ___/___/______</div>
+  </div>
+  <footer>Essencial Digital · essencialestudo.com.br · Proposta gerada em ${hoje} · Válida por 30 dias</footer>
+</div>
+<div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:12px;">
+  <button onclick="window.print()" style="background:#7c3aed;color:white;border:none;border-radius:12px;padding:12px 24px;font-weight:800;cursor:pointer;">🖨️ Imprimir / Salvar PDF</button>
+  <button onclick="window.close()" style="background:#333;color:white;border:none;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;">✕ Fechar</button>
+</div>
+</body></html>`);
+}
+
+function abrirPropostaRH() {
+  const hoje = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  _abrirJanela(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>Proposta RH — Essencial Digital</title>
+<style>${_estiloBase}
+  .logo { color:#1d4ed8; }
+  .subtitulo { color:#1d4ed8; }
+  .intro { background:#eff6ff; border-left:4px solid #1d4ed8; }
+  .tabela th { background:#dbeafe; color:#1d4ed8; }
+  .tabela .preco { color:#1d4ed8; }
+  .contato { border:2px solid #1d4ed8; }
+  .contato .btn { background:linear-gradient(135deg,#1d4ed8,#3b82f6); }
+</style></head><body>
+<div class="pagina">
+  <div class="header">
+    <div>
+      <div class="logo">Essencial Digital</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;">Tecnologia que transforma vidas</div>
+    </div>
+    <div class="header-info"><strong>Proposta Comercial — RH</strong><br>Data: ${hoje}<br>Validade: 30 dias<br>CNPJ: 58.062.495/0001-63</div>
+  </div>
+
+  <h1>Proposta Comercial</h1>
+  <div class="subtitulo">👥 RH Essencial Digital + Diagnóstico Psicossocial NR-1</div>
+
+  <div class="intro">
+    A <strong>Essencial Digital</strong> oferece solução completa de gestão de RH com diagnóstico psicossocial integrado para conformidade com a NR-1 (obrigatória desde maio/2026). Laudos automáticos, gestão de colaboradores e relatórios com IA — tudo em uma plataforma.
+  </div>
+
+  <h2>📦 Tabela de Preços por Colaborador</h2>
+  <table class="tabela">
+    <thead><tr><th>Plano</th><th>Inclui</th><th>Por colaborador/mês</th><th>Exemplo (50 colab.)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Essencial Start</strong></td><td>Diagnóstico NR-1 · gestão básica · mín. 10</td><td class="preco">R$ 24,90</td><td>R$ 1.245,00/mês</td></tr>
+      <tr><td><strong>Essencial Pro</strong></td><td>Dashboards avançados · saúde mental · plano de ação automático</td><td class="preco">R$ 34,90</td><td>R$ 1.745,00/mês</td></tr>
+      <tr><td><strong>Essencial Enterprise</strong></td><td>Consultoria estratégica · benchmarking · BI executivo · suporte prioritário</td><td class="preco">R$ 49,90</td><td>R$ 2.495,00/mês</td></tr>
+    </tbody>
+  </table>
+
+  <div class="condicoes">
+    <strong>⚙️ Condições:</strong> Contrato mínimo de 12 meses. Implantação e treinamento inclusos. Pagamento mensal ou anual antecipado com 10% de desconto. Reajuste anual pelo IPCA. Inclui suporte para adequação à NR-1 e laudos psicossociais.
+  </div>
+
+  <h2>✅ O que está incluso</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px;font-size:0.83rem;color:#444;">
+    <div>✓ Diagnóstico Psicossocial NR-1</div><div>✓ Laudos automáticos com IA</div>
+    <div>✓ Gestão de colaboradores</div><div>✓ Relatórios de clima organizacional</div>
+    <div>✓ Módulo DISC</div><div>✓ Painel do gestor de RH</div>
+    <div>✓ Conformidade legal NR-1</div><div>✓ Suporte dedicado</div>
+  </div>
+
+  <h2>📞 Próximos Passos</h2>
+  <div class="contato">
+    <div>
+      <h3>Alana Carvalho — Fundadora</h3>
+      <p>Especialista em Psicologia Organizacional e Gestão de Pessoas</p>
+      <p style="margin-top:6px;">📱 (61) 98527-2681 &nbsp;·&nbsp; 📧 essencialdigital2@gmail.com</p>
+    </div>
+    <a href="https://wa.me/5561985272681" class="btn">Agendar reunião →</a>
+  </div>
+
+  <div class="assinatura">
+    <div class="ass-box"><strong>Essencial Digital</strong>Alana Carvalho — Fundadora<br>CNPJ: 58.062.495/0001-63</div>
+    <div class="ass-box"><strong>Empresa / Responsável</strong>&nbsp;<br>Data: ___/___/______</div>
+  </div>
+  <footer>Essencial Digital · essencial-digital.vercel.app · Proposta gerada em ${hoje} · Válida por 30 dias</footer>
+</div>
+<div class="no-print" style="position:fixed;bottom:24px;right:24px;display:flex;gap:12px;">
+  <button onclick="window.print()" style="background:#1d4ed8;color:white;border:none;border-radius:12px;padding:12px 24px;font-weight:800;cursor:pointer;">🖨️ Imprimir / Salvar PDF</button>
+  <button onclick="window.close()" style="background:#333;color:white;border:none;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;">✕ Fechar</button>
+</div>
+</body></html>`);
+}
+
+</script>
+</body>
+</html>

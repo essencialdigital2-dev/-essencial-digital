@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essencial Agro | Capacitação e Gestão no Agronegócio</title>
+<meta name="description" content="Plataforma de treinamento e gestão de equipes para o campo. Capacitações técnicas, diagnósticos psicossociais, NR-1 e relatórios para propriedades e cooperativas.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #08080f; color: white; overflow-x: hidden; }
+
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 50%, rgba(21,128,61,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(34,197,94,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(16,185,129,0.2) 0%, transparent 50%),
+                #08080f;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 20px 60px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    padding: 8px 20px; border-radius: 50px; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); margin-bottom: 32px;
+  }
+  .badge span { width: 6px; height: 6px; border-radius: 50%; background: #86efac; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  #universo { display: block; margin: 0 auto 48px; }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #86efac 40%, #4ade80 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero p { font-size: clamp(1rem, 2vw, 1.15rem); opacity: 0.75; max-width: 580px; line-height: 1.8; margin-bottom: 16px; }
+  .hero-desc-box { background: rgba(21,128,61,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 20px 28px; max-width: 580px; margin-bottom: 36px; }
+  .hero-desc-box p { opacity: 1; margin-bottom: 0; font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+  .hero-desc-box strong { color: #86efac; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: linear-gradient(135deg, #15803d, #22c55e);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 800; font-size: 0.95rem; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(21,128,61,0.4); transition: transform 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: white; padding: 14px 32px; border-radius: 14px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+  }
+
+  .stats {
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    padding: 48px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-size: 2rem; font-weight: 900; color: #86efac; }
+  .stat-item .label { font-size: 0.78rem; opacity: 0.5; margin-top: 4px; }
+
+  .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-label { text-align: center; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.4; margin-bottom: 16px; }
+  .section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 12px; }
+  .section-sub { text-align: center; opacity: 0.5; font-size: 1rem; margin-bottom: 56px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .card {
+    border-radius: 24px; padding: 32px; position: relative; overflow: hidden;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(34,197,94,0.2);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(34,197,94,0.5); }
+  .card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .card h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 10px; color: #86efac; }
+  .card p { font-size: 0.85rem; opacity: 0.6; line-height: 1.6; }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(21,128,61,0.12), rgba(16,185,129,0.1));
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 28px;
+    padding: 56px 48px; margin: 0 20px 80px; max-width: 1060px;
+    margin-left: auto; margin-right: auto; text-align: center;
+  }
+  .cta-box h2 { font-size: 2rem; font-weight: 900; margin-bottom: 16px; }
+  .cta-box p { opacity: 0.6; line-height: 1.7; margin-bottom: 32px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .tag { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; font-size: 0.75rem; font-weight: 700; padding: 5px 16px; border-radius: 50px; }
+
+  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 20px; text-align: center; }
+  .footer-logo { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; background: linear-gradient(135deg, #86efac, #4ade80); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  footer p { opacity: 0.3; font-size: 0.82rem; margin-bottom: 24px; }
+  .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+  .footer-links a { color: rgba(255,255,255,0.4); font-size: 0.82rem; text-decoration: none; }
+  .footer-links a:hover { color: white; }
+  .footer-copy { font-size: 0.72rem; opacity: 0.2; }
+
+  @media (max-width: 768px) {
+    .stats { gap: 28px; padding: 36px 20px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+    #universo { width: 300px !important; height: 300px !important; }
+    .cta-box { padding: 32px 24px; }
+    .footer-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge"><span></span> Essencial Agro · Agronegócio</div>
+  <canvas id="universo" width="420" height="420"></canvas>
+  <h1>Gestão inteligente<br>para o campo</h1>
+  <p>Plataforma de treinamento e gestão de equipes para propriedades rurais e cooperativas. Capacitações técnicas, diagnósticos psicossociais e NR-1 para o agronegócio.</p>
+  <div class="hero-desc-box">
+    <p>✅ <strong>Capacitação Rural</strong> digital · ✅ <strong>Diagnóstico Psicossocial</strong> NR-1 · ✅ <strong>Gestão de equipes</strong> no campo · ✅ <strong>Relatórios automáticos</strong> com IA</p>
+  </div>
+  <div class="hero-btns">
+    <a href="https://wa.me/5561985272681" class="btn-primary">Quero uma demonstração →</a>
+    <a href="index.html" class="btn-secondary">← Todos os produtos</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-item"><div class="num">NR-1</div><div class="label">Campo e cooperativas</div></div>
+  <div class="stat-item"><div class="num">100%</div><div class="label">Digital e na nuvem</div></div>
+  <div class="stat-item"><div class="num">LGPD</div><div class="label">Dados protegidos</div></div>
+  <div class="stat-item"><div class="num">IA</div><div class="label">Relatórios automáticos</div></div>
+</div>
+
+<div class="section">
+  <div class="section-label">Funcionalidades</div>
+  <h2 class="section-title">Tecnologia que chega ao campo</h2>
+  <p class="section-sub">Substitua processos manuais por uma plataforma completa para o agronegócio</p>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🧠</div><h3>Diagnóstico Psicossocial</h3><p>Avaliação da saúde mental e bem-estar de trabalhadores rurais com relatórios automáticos conforme NR-1.</p></div>
+    <div class="card"><div class="card-icon">📋</div><h3>NR-1 para o Campo</h3><p>Gestão de riscos psicossociais adaptada ao contexto rural, com laudos prontos para auditorias e fiscalizações.</p></div>
+    <div class="card"><div class="card-icon">🌾</div><h3>Capacitações Técnicas</h3><p>Treinamentos digitais sobre manejo, segurança no trabalho, uso de EPI e boas práticas agrícolas.</p></div>
+    <div class="card"><div class="card-icon">👥</div><h3>Gestão de Equipes</h3><p>Controle de colaboradores, turnos, funções e histórico de cada trabalhador da propriedade ou cooperativa.</p></div>
+    <div class="card"><div class="card-icon">📊</div><h3>Relatórios Automáticos</h3><p>Dashboards de produtividade, absenteísmo e clima organizacional gerados automaticamente por IA.</p></div>
+    <div class="card"><div class="card-icon">📝</div><h3>Formulários Rurais</h3><p>Checklists de segurança, fichas de ocorrência, controle de EPI e registros operacionais digitais.</p></div>
+  </div>
+</div>
+
+<div class="cta-box">
+  <h2>Leve tecnologia para sua propriedade</h2>
+  <p>Agende uma demonstração gratuita e descubra como o Essencial Agro pode transformar a gestão da sua equipe no campo.</p>
+  <div class="tags">
+    <span class="tag">🌱 Capacitação Rural</span>
+    <span class="tag">📋 NR-1 Campo</span>
+    <span class="tag">🧠 Diagnóstico Psicossocial</span>
+    <span class="tag">📊 Gestão de Equipes</span>
+    <span class="tag">🛡️ LGPD</span>
+  </div>
+  <a href="https://wa.me/5561985272681" class="btn-primary">Agendar demonstração gratuita →</a>
+</div>
+
+<footer>
+  <div class="footer-logo">Essencial Digital</div>
+  <p>Tecnologia que transforma vidas — feita no Brasil para o Brasil</p>
+  <div class="footer-links">
+    <a href="https://essencialestudo.com.br">Essencial Estudo</a>
+    <a href="https://essencialestudo.com.br/teens">Essencial Teens</a>
+    <a href="rh.html">RH Essencial Digital</a>
+    <a href="index.html">Todos os produtos</a>
+    <a href="https://wa.me/5561985272681">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2026 Essencial Digital · Alana Carvalho · CNPJ 58.062.495/0001-63</div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('universo');
+  const ctx = canvas.getContext('2d');
+
+  function ajustarCanvas() {
+    const size = window.innerWidth < 480 ? 300 : 420;
+    canvas.width = size; canvas.height = size;
+  }
+  ajustarCanvas();
+  window.addEventListener('resize', ajustarCanvas);
+
+  const ferramentas = [
+    { label: '🌾', nome: 'Cultivo',  cor: '#86efac', vel: 0.007, ang: 0 },
+    { label: '🧠', nome: 'Diagnóst.',cor: '#4ade80', vel: 0.007, ang: Math.PI * 2/6 },
+    { label: '📋', nome: 'NR-1',     cor: '#22c55e', vel: 0.007, ang: Math.PI * 4/6 },
+    { label: '👥', nome: 'Equipes',  cor: '#86efac', vel: 0.007, ang: Math.PI * 6/6 },
+    { label: '📊', nome: 'Relatório',cor: '#4ade80', vel: 0.007, ang: Math.PI * 8/6 },
+    { label: '📝', nome: 'Formulár.',cor: '#22c55e', vel: 0.007, ang: Math.PI * 10/6 },
+  ];
+
+  const estrelas = Array.from({ length: 120 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.2, op: Math.random(),
+    vel: 0.003 + Math.random() * 0.01,
+  }));
+
+  const particulas = Array.from({ length: 40 }, criarParticula);
+  function criarParticula() {
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 20 + Math.random() * 80;
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    return {
+      x: cx + Math.cos(ang) * dist, y: cy + Math.sin(ang) * dist,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 2,
+      cor: ['#86efac','#4ade80','#22c55e','#6ee7b7','#bbf7d0'][Math.floor(Math.random()*5)],
+      vida: 0, maxVida: 80 + Math.random() * 120,
+    };
+  }
+
+  function desenharNucleo(cx, cy, t) {
+    const pulso = 1 + 0.15 * Math.sin(t * 0.05);
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55 * pulso);
+    grad.addColorStop(0, 'rgba(21,128,61,0.4)');
+    grad.addColorStop(0.5, 'rgba(34,197,94,0.2)');
+    grad.addColorStop(1, 'rgba(21,128,61,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, 55 * pulso, 0, Math.PI * 2);
+    ctx.fillStyle = grad; ctx.fill();
+
+    const g2 = ctx.createLinearGradient(cx-28, cy-28, cx+28, cy+28);
+    g2.addColorStop(0, '#15803d'); g2.addColorStop(1, '#22c55e');
+    ctx.beginPath(); ctx.roundRect(cx-28, cy-28, 56, 56, 16);
+    ctx.fillStyle = g2; ctx.shadowColor = '#86efac'; ctx.shadowBlur = 30;
+    ctx.fill(); ctx.shadowBlur = 0;
+
+    ctx.font = '22px serif'; ctx.fillStyle = 'white';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('🌿', cx, cy);
+  }
+
+  function desenharOrbita(cx, cy, raio) {
+    ctx.beginPath(); ctx.arc(cx, cy, raio, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]); ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function desenharConexoes(posicoes, cx, cy) {
+    posicoes.forEach((p, i) => {
+      posicoes.forEach((q, j) => {
+        if (j <= i) return;
+        const dist = Math.hypot(p.x - q.x, p.y - q.y);
+        if (dist < 150) {
+          const op = (1 - dist / 150) * 0.3;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(134,239,172,${op})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      });
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p.x, p.y);
+      const op2 = 0.08 + 0.06 * Math.sin(Date.now() * 0.002 + i);
+      ctx.strokeStyle = `rgba(255,255,255,${op2})`; ctx.lineWidth = 0.5; ctx.stroke();
+    });
+  }
+
+  function desenharItem(p, x, y) {
+    const halo = ctx.createRadialGradient(x, y, 0, x, y, 28);
+    halo.addColorStop(0, p.cor + '55'); halo.addColorStop(1, p.cor + '00');
+    ctx.beginPath(); ctx.arc(x, y, 28, 0, Math.PI * 2);
+    ctx.fillStyle = halo; ctx.fill();
+
+    ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#0d0d1a'; ctx.fill();
+    ctx.strokeStyle = p.cor; ctx.lineWidth = 2;
+    ctx.shadowColor = p.cor; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0;
+
+    ctx.font = '14px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(p.label, x, y);
+    ctx.font = 'bold 9px Segoe UI'; ctx.fillStyle = p.cor; ctx.textAlign = 'center';
+    ctx.fillText(p.nome, x, y + 30);
+  }
+
+  let t = 0;
+  function animar() {
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const raio = W < 350 ? 95 : 130;
+    ctx.clearRect(0, 0, W, H); t++;
+
+    estrelas.forEach(s => {
+      s.op += s.vel * (Math.random() > 0.5 ? 1 : -1);
+      s.op = Math.max(0.05, Math.min(0.8, s.op));
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.op})`; ctx.fill();
+    });
+
+    for (let i = 0; i < particulas.length; i++) {
+      const p = particulas[i]; p.vida++;
+      p.x += p.vx; p.y += p.vy;
+      const fade = p.vida < 20 ? p.vida/20 : p.vida > p.maxVida-20 ? (p.maxVida-p.vida)/20 : 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.cor + Math.floor(fade*180).toString(16).padStart(2,'0');
+      ctx.fill();
+      if (p.vida >= p.maxVida) particulas[i] = criarParticula();
+    }
+
+    desenharOrbita(cx, cy, raio);
+
+    const posicoes = ferramentas.map(p => {
+      p.ang += p.vel;
+      return { x: cx + Math.cos(p.ang) * raio, y: cy + Math.sin(p.ang) * raio, ...p };
+    });
+
+    desenharConexoes(posicoes, cx, cy);
+    posicoes.forEach(p => desenharItem(p, p.x, p.y));
+    desenharNucleo(cx, cy, t);
+    requestAnimationFrame(animar);
+  }
+  animar();
+</script>
+</body>
+</html>
