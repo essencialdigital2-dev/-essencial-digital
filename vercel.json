@@ -1,1 +1,7 @@
-{"outputDirectory": "."}
+{
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/mente", "destination": "https://essencial-mente.vercel.app", "permanent": false },
+    { "source": "/mente/(.*)", "destination": "https://essencial-mente.vercel.app/$1", "permanent": false }
+  ]
+}
