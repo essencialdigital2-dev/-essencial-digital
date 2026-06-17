@@ -1,7 +1,6 @@
 {
   "outputDirectory": ".",
-  "redirects": [
-    { "source": "/mente", "destination": "https://essencialestudo.com.br/mente", "permanent": false },
-    { "source": "/mente/(.*)", "destination": "https://essencialestudo.com.br/mente/$1", "permanent": false }
+  "rewrites": [
+    { "source": "/mente", "destination": "/mente.html" }
   ]
 }
