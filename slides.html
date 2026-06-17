@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essencial Digital — Apresentação Institucional</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; height:100%; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:#000; }
+
+/* ── SLIDES ── */
+.deck { width:100%; height:100vh; position:relative; }
+.slide {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .6s ease;
+  padding:60px;
+}
+.slide.active { opacity:1; pointer-events:all; }
+
+/* ── NAV ── */
+.nav {
+  position:fixed; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:20px; z-index:100;
+  background:rgba(0,0,0,.5); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.1); border-radius:50px; padding:10px 24px;
+}
+.nav-btn {
+  background:none; border:none; color:rgba(255,255,255,.6); cursor:pointer;
+  font-size:1.2rem; padding:4px 8px; border-radius:8px; transition:all .2s;
+}
+.nav-btn:hover { color:white; background:rgba(255,255,255,.1); }
+.nav-dots { display:flex; gap:8px; align-items:center; }
+.dot {
+  width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.25);
+  cursor:pointer; transition:all .3s;
+}
+.dot.active { background:white; width:22px; border-radius:4px; }
+.nav-counter { font-size:.75rem; color:rgba(255,255,255,.35); min-width:40px; text-align:center; }
+
+/* ── SLIDE 1 — CAPA ── */
+.s1 {
+  background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,.5) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 20%, rgba(236,72,153,.3) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 90%, rgba(16,185,129,.2) 0%, transparent 50%),
+              #030310;
+  text-align:center;
+}
+.s1 .badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.4);
+  padding:8px 24px; border-radius:50px; font-size:.75rem; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase; color:#c4b5fd; margin-bottom:40px;
+}
+.s1 h1 {
+  font-size:clamp(2.5rem,5vw,4.5rem); font-weight:900; line-height:1.05;
+  background:linear-gradient(135deg,#fff 0%,#c4b5fd 40%,#f9a8d4 70%,#6ee7b7 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:24px;
+}
+.s1 p { font-size:1.15rem; color:rgba(255,255,255,.55); max-width:580px; line-height:1.8; margin-bottom:48px; }
+.s1 .pills { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.pill {
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  padding:8px 20px; border-radius:50px; font-size:.8rem; color:rgba(255,255,255,.6); font-weight:600;
+}
+
+/* ── SLIDE 2 — PROBLEMA ── */
+.s2 {
+  background: radial-gradient(ellipse at 0% 50%, rgba(239,68,68,.2) 0%, transparent 50%),
+              #03030f;
+}
+.s2 .split { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; }
+.s2 .left h2 { font-size:clamp(1.8rem,3vw,3rem); font-weight:900; color:white; line-height:1.15; margin-bottom:24px; }
+.s2 .left h2 span { color:#f87171; }
+.s2 .left p { font-size:1rem; color:rgba(255,255,255,.5); line-height:1.9; }
+.s2 .right { display:flex; flex-direction:column; gap:16px; }
+.stat-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:20px; padding:24px 28px;
+  border-left:3px solid #ef4444;
+}
+.stat-num { font-size:2.2rem; font-weight:900; color:#fca5a5; }
+.stat-label { font-size:.82rem; color:rgba(255,255,255,.45); margin-top:4px; line-height:1.5; }
+
+/* ── SLIDE 3 — SOLUÇÃO ── */
+.s3 {
+  background: radial-gradient(ellipse at 80% 30%, rgba(124,58,237,.3) 0%, transparent 55%),
+              #030310;
+}
+.s3 .top { text-align:center; margin-bottom:56px; }
+.s3 .top .label { font-size:.7rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:#a78bfa; margin-bottom:12px; }
+.s3 .top h2 { font-size:clamp(1.8rem,3vw,2.8rem); font-weight:900; color:white; }
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1100px; width:100%; }
+.feat {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:20px; padding:28px; transition:border-color .3s;
+}
+.feat:hover { border-color:rgba(167,139,250,.4); }
+.feat .ico { font-size:2rem; margin-bottom:14px; }
+.feat h3 { font-size:.95rem; font-weight:800; color:white; margin-bottom:8px; }
+.feat p { font-size:.78rem; color:rgba(255,255,255,.45); line-height:1.7; }
+
+/* ── SLIDE 4 — TEENS ── */
+.s4 {
+  background: radial-gradient(ellipse at 20% 30%, rgba(236,72,153,.3) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 70%, rgba(251,191,36,.15) 0%, transparent 50%),
+              #030310;
+}
+.s4 .split { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; }
+.s4 .left .label { font-size:.7rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:#f9a8d4; margin-bottom:14px; }
+.s4 .left h2 { font-size:clamp(1.8rem,3vw,3rem); font-weight:900; color:white; line-height:1.15; margin-bottom:20px; }
+.s4 .left p { font-size:.95rem; color:rgba(255,255,255,.5); line-height:1.9; margin-bottom:32px; }
+.s4 .tags { display:flex; flex-wrap:wrap; gap:8px; }
+.tag-pink {
+  background:rgba(236,72,153,.12); border:1px solid rgba(236,72,153,.3);
+  color:#f9a8d4; padding:6px 16px; border-radius:50px; font-size:.75rem; font-weight:700;
+}
+.s4 .right { display:flex; flex-direction:column; gap:14px; }
+.teens-feat {
+  display:flex; align-items:center; gap:16px;
+  background:rgba(236,72,153,.06); border:1px solid rgba(236,72,153,.15);
+  border-radius:16px; padding:18px 22px;
+}
+.teens-feat .ico { font-size:1.6rem; flex-shrink:0; }
+.teens-feat h4 { font-size:.88rem; font-weight:800; color:white; margin-bottom:3px; }
+.teens-feat p { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.5; }
+
+/* ── SLIDE 5 — PREÇOS ── */
+.s5 {
+  background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.2) 0%, transparent 60%),
+              #030310;
+}
+.s5 .top { text-align:center; margin-bottom:48px; }
+.s5 .top .label { font-size:.7rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:#a78bfa; margin-bottom:12px; }
+.s5 .top h2 { font-size:clamp(1.6rem,3vw,2.5rem); font-weight:900; color:white; }
+.preco-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; max-width:1100px; width:100%; }
+.preco-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);
+  border-radius:20px; padding:24px 18px; text-align:center;
+  position:relative; transition:transform .3s;
+}
+.preco-card:hover { transform:translateY(-4px); }
+.preco-card.destaque {
+  background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(236,72,153,.1));
+  border-color:rgba(167,139,250,.5);
+}
+.preco-nome { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:#a78bfa; margin-bottom:8px; }
+.preco-faixa { font-size:.72rem; color:rgba(255,255,255,.35); margin-bottom:14px; }
+.preco-val { font-size:1.1rem; font-weight:900; color:#c4b5fd; line-height:1.2; }
+.preco-val2 { font-size:.85rem; font-weight:700; color:#f9a8d4; margin-top:4px; }
+.preco-label { font-size:.6rem; color:rgba(255,255,255,.25); margin-top:6px; }
+.preco-badge {
+  position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+  background:linear-gradient(135deg,#7c3aed,#ec4899); color:white;
+  font-size:.55rem; font-weight:900; padding:3px 12px; border-radius:20px;
+  white-space:nowrap; letter-spacing:.05em;
+}
+
+/* ── SLIDE 6 — DIFERENCIAIS ── */
+.s6 {
+  background: radial-gradient(ellipse at 80% 50%, rgba(16,185,129,.2) 0%, transparent 55%),
+              #030310;
+}
+.s6 .top { text-align:center; margin-bottom:56px; }
+.s6 .top .label { font-size:.7rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:#6ee7b7; margin-bottom:12px; }
+.s6 .top h2 { font-size:clamp(1.8rem,3vw,2.8rem); font-weight:900; color:white; }
+.diff-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-width:1100px; width:100%; }
+.diff-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:20px; padding:28px 22px; text-align:center;
+}
+.diff-card .ico { font-size:2.4rem; margin-bottom:16px; }
+.diff-card h3 { font-size:.9rem; font-weight:800; color:white; margin-bottom:8px; }
+.diff-card p { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.7; }
+
+/* ── SLIDE 7 — CTA ── */
+.s7 {
+  background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.35) 0%, transparent 65%),
+              #030310;
+  text-align:center;
+}
+.s7 h2 {
+  font-size:clamp(2rem,4vw,3.8rem); font-weight:900; line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,#c4b5fd 50%,#f9a8d4 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:20px;
+}
+.s7 p { font-size:1rem; color:rgba(255,255,255,.45); margin-bottom:48px; max-width:520px; }
+.s7 .btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:56px; }
+.btn-primary {
+  background:linear-gradient(135deg,#7c3aed,#ec4899); color:white;
+  padding:16px 36px; border-radius:14px; font-weight:800; font-size:.95rem;
+  text-decoration:none; box-shadow:0 8px 40px rgba(124,58,237,.4);
+}
+.btn-secondary {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15);
+  color:white; padding:16px 36px; border-radius:14px; font-weight:700;
+  font-size:.95rem; text-decoration:none;
+}
+.contact-info { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; }
+.contact-item { font-size:.85rem; color:rgba(255,255,255,.4); }
+.contact-item strong { color:rgba(255,255,255,.7); display:block; font-size:.95rem; }
+
+/* grid dots bg */
+.slide::before {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='.6' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1 — CAPA -->
+  <div class="slide s1 active">
+    <div class="badge">✦ Proposta Institucional 2026</div>
+    <h1>Tecnologia que<br>transforma como<br>se aprende.</h1>
+    <p>Plataformas de estudo com IA para escolas, cursinhos e instituições de ensino. Método, engajamento e resultados reais.</p>
+    <div class="pills">
+      <span class="pill">📚 Essencial Estudo</span>
+      <span class="pill">⚡ Essencial Teens</span>
+      <span class="pill">🤖 IA Personalizada</span>
+      <span class="pill">📊 Painel do Gestor</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — PROBLEMA -->
+  <div class="slide s2">
+    <div class="split">
+      <div class="left">
+        <h2>O aluno está presente.<br><span>Mas está perdido.</span></h2>
+        <p>Ele assiste às aulas, copia o conteúdo, entrega as tarefas. Mas em casa, na hora de estudar sozinho, trava. Nunca aprendeu a aprender — e nenhuma apostila resolve isso.</p>
+      </div>
+      <div class="right">
+        <div class="stat-card">
+          <div class="stat-num">72%</div>
+          <div class="stat-label">dos estudantes não têm método de estudo definido — estudam por impulso, sem consistência</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3x</div>
+          <div class="stat-label">mais chance de aprovação com acompanhamento emocional e metodológico contínuo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">68%</div>
+          <div class="stat-label">dos alunos relatam ansiedade antes de provas — sinal de falta de estrutura, não de conteúdo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — SOLUÇÃO ESTUDO -->
+  <div class="slide s3">
+    <div class="top">
+      <div class="label">A Solução · Essencial Estudo</div>
+      <h2>50+ ferramentas que acompanham<br>o aluno do início ao fim.</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="ico">🤖</div>
+        <h3>IA Personalizada</h3>
+        <p>Cronograma, flashcards e plano de estudos adaptados ao objetivo e ritmo de cada aluno.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">💚</div>
+        <h3>Acompanhamento Emocional</h3>
+        <p>Radar de humor, diagnóstico de sabotagem e plano de contingência quando a semana desanda.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">📊</div>
+        <h3>Painel do Coordenador</h3>
+        <p>Visão em tempo real de engajamento, progresso e alertas por turma — sem precisar perguntar ao aluno.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">⚡</div>
+        <h3>Simulados & Questões</h3>
+        <p>Banco de questões por disciplina com correção automática e relatório de desempenho detalhado.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🎯</div>
+        <h3>Gamificação</h3>
+        <p>XP, níveis, streak e conquistas que mantêm o ritmo nos dias difíceis sem forçar disciplina.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">📋</div>
+        <h3>Módulos por Objetivo</h3>
+        <p>ENEM, OAB, Residência Médica, Concursos, Militar — cada aluno acessa o que é relevante para ele.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — TEENS -->
+  <div class="slide s4">
+    <div class="split">
+      <div class="left">
+        <div class="label">⚡ Essencial Teens · 7º ao 9º ano</div>
+        <h2>Estudo que o aluno<br>realmente quer fazer.</h2>
+        <p>Plataforma gamificada com IA adaptada à faixa etária. Painel completo para coordenadores e área exclusiva para os pais acompanharem a evolução do filho.</p>
+        <div class="tags">
+          <span class="tag-pink">🎮 Gamificação RPG</span>
+          <span class="tag-pink">🤖 Kai IA</span>
+          <span class="tag-pink">👨‍👩‍👧 Área dos Pais</span>
+          <span class="tag-pink">📊 Painel Gestor</span>
+          <span class="tag-pink">💰 Finanças</span>
+          <span class="tag-pink">📔 Diário Secreto</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="teens-feat">
+          <div class="ico">🎮</div>
+          <div>
+            <h4>Sistema de Missões Diárias</h4>
+            <p>XP, badges e ranking que transformam o estudo em jogo sem perder o foco no aprendizado real</p>
+          </div>
+        </div>
+        <div class="teens-feat">
+          <div class="ico">🤖</div>
+          <div>
+            <h4>Kai — IA para Teens</h4>
+            <p>Assistente com linguagem adaptada ao fundamental. Explica, motiva e acompanha cada aluno</p>
+          </div>
+        </div>
+        <div class="teens-feat">
+          <div class="ico">👨‍👩‍👧</div>
+          <div>
+            <h4>Área Exclusiva dos Pais</h4>
+            <p>Horas de estudo, conquistas e evolução do filho em tempo real — sem invadir a privacidade do aluno</p>
+          </div>
+        </div>
+        <div class="teens-feat">
+          <div class="ico">📊</div>
+          <div>
+            <h4>Painel do Coordenador</h4>
+            <p>Visão por turma, alertas de baixo engajamento e relatórios mensais automáticos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — PREÇOS -->
+  <div class="slide s5">
+    <div class="top">
+      <div class="label">Investimento Institucional</div>
+      <h2>Planos por turma. Sem cobrança por aluno.</h2>
+    </div>
+    <div class="preco-grid">
+      <div class="preco-card">
+        <div class="preco-nome">Starter</div>
+        <div class="preco-faixa">até 40 alunos</div>
+        <div class="preco-val">R$990</div>
+        <div class="preco-val2">R$890 Teens</div>
+        <div class="preco-label">Estudo / mês</div>
+      </div>
+      <div class="preco-card">
+        <div class="preco-nome">Médio</div>
+        <div class="preco-faixa">até 60 alunos</div>
+        <div class="preco-val">R$1.790</div>
+        <div class="preco-val2">R$1.590 Teens</div>
+        <div class="preco-label">Estudo / mês</div>
+      </div>
+      <div class="preco-card destaque">
+        <div class="preco-badge">⭐ MAIS ESCOLHIDO</div>
+        <div class="preco-nome">Escola</div>
+        <div class="preco-faixa">até 100 alunos</div>
+        <div class="preco-val">R$2.790</div>
+        <div class="preco-val2">R$2.490 Teens</div>
+        <div class="preco-label">Estudo / mês</div>
+      </div>
+      <div class="preco-card">
+        <div class="preco-nome">Plus</div>
+        <div class="preco-faixa">até 150 alunos</div>
+        <div class="preco-val">R$3.990</div>
+        <div class="preco-val2">R$3.490 Teens</div>
+        <div class="preco-label">Estudo / mês</div>
+      </div>
+      <div class="preco-card">
+        <div class="preco-nome">Rede</div>
+        <div class="preco-faixa">+150 alunos</div>
+        <div class="preco-val">R$4.997</div>
+        <div class="preco-val2">múltiplas unidades</div>
+        <div class="preco-label">/ mês</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 — DIFERENCIAIS -->
+  <div class="slide s6">
+    <div class="top">
+      <div class="label">Por que a Essencial Digital</div>
+      <h2>Mais do que um app de estudos.</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="ico">🧬</div>
+        <h3>Base Científica</h3>
+        <p>Desenvolvido por especialista em Psicologia Organizacional e Gestão de Pessoas — não por engenheiros.</p>
+      </div>
+      <div class="diff-card">
+        <div class="ico">🤖</div>
+        <h3>IA Real</h3>
+        <p>Não é chatbot genérico. A IA analisa o perfil, detecta padrões e adapta o plano de cada aluno.</p>
+      </div>
+      <div class="diff-card">
+        <div class="ico">💚</div>
+        <h3>Cuidado Emocional</h3>
+        <p>Única plataforma que combina método de estudo com rastreamento emocional e saúde mental.</p>
+      </div>
+      <div class="diff-card">
+        <div class="ico">🚀</div>
+        <h3>Implantação Inclusa</h3>
+        <p>Treinamento, suporte e onboarding para coordenadores e alunos sem custo adicional.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 — CTA -->
+  <div class="slide s7">
+    <h2>Pronto para transformar<br>sua instituição?</h2>
+    <p>Agende uma demonstração gratuita e veja na prática o que a Essencial Digital pode fazer pelos seus alunos.</p>
+    <div class="btns">
+      <a href="https://wa.me/5561985272681" class="btn-primary">📱 Agendar demonstração gratuita</a>
+      <a href="https://rhessencialdigital.com.br" class="btn-secondary">🌐 Ver o ecossistema completo</a>
+    </div>
+    <div class="contact-info">
+      <div class="contact-item">
+        <strong>Alana Carvalho</strong>
+        Gestão de Pessoas · Psicologia Organizacional
+      </div>
+      <div class="contact-item">
+        <strong>(61) 98527-2681</strong>
+        WhatsApp · seg a sex · 8h–18h
+      </div>
+      <div class="contact-item">
+        <strong>essencialdigital2@gmail.com</strong>
+        Proposta por email em 24h
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn" onclick="prev()">←</button>
+  <div class="nav-dots" id="dots"></div>
+  <button class="nav-btn" onclick="next()">→</button>
+  <span class="nav-counter" id="counter">1 / 7</span>
+</nav>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const counter = document.getElementById('counter');
+let cur = 0;
+
+// criar dots
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => go(i);
+  dotsEl.appendChild(d);
+});
+
+function go(n) {
+  slides[cur].classList.remove('active');
+  dotsEl.children[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  dotsEl.children[cur].classList.add('active');
+  counter.textContent = `${cur+1} / ${slides.length}`;
+}
+function next() { go(cur+1); }
+function prev() { go(cur-1); }
+
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+</script>
+</body>
+</html>
