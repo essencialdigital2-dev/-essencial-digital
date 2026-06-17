@@ -349,6 +349,20 @@
       <div class="card-link" style="color:#86efac;">Saiba mais →</div>
     </a>
 
+    <div class="produto-card" style="background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(139,92,246,0.07)); border-color:rgba(244,114,182,0.25); cursor:default; position:relative; overflow:hidden;">
+      <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,rgba(236,72,153,.25),rgba(139,92,246,.25));border:1px solid rgba(244,114,182,.4);border-radius:50px;padding:3px 12px;font-size:0.6rem;font-weight:900;color:#f472b6;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#f472b6;animation:pulse 1.5s infinite;display:inline-block"></span>Em breve</div>
+      <div class="card-icon">🤝</div>
+      <div class="card-tag" style="background:rgba(236,72,153,0.2); color:#f472b6;">Times de Alta Performance</div>
+      <div class="card-title">Essencial Teams</div>
+      <div class="card-desc">Plataforma de desenvolvimento coletivo para equipes. Diagnóstico de time, mapeamento de papéis, trilhas de coesão e acompanhamento de resultados — tudo para quem lidera pessoas.</div>
+      <div class="card-publico">Para líderes e equipes corporativas</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+        <span style="background:rgba(236,72,153,0.15); border:1px solid rgba(236,72,153,0.3); color:#f472b6; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">👥 Diagnóstico de Time</span>
+        <span style="background:rgba(236,72,153,0.15); border:1px solid rgba(236,72,153,0.3); color:#f472b6; font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:50px;">🎯 Trilhas de Coesão</span>
+      </div>
+      <div style="color:#f472b6; font-size:0.85rem; font-weight:700;">Lista de espera →</div>
+    </div>
+
   </div>
 </div>
 
@@ -439,13 +453,15 @@
   window.addEventListener('resize', ajustarCanvas);
 
   const produtos = [
-    { label: '📚', nome: 'Estudo',    cor: '#c084fc', vel: 0.007, ang: Math.PI * 0/7 },
-    { label: '⚡', nome: 'Teens',     cor: '#f9a8d4', vel: 0.007, ang: Math.PI * 2/7 },
-    { label: '🩺', nome: 'Med',       cor: '#6ee7b7', vel: 0.007, ang: Math.PI * 4/7 },
-    { label: '⚖️', nome: 'Jurídico',  cor: '#fcd34d', vel: 0.007, ang: Math.PI * 6/7 },
-    { label: '👥', nome: 'RH',        cor: '#93c5fd', vel: 0.007, ang: Math.PI * 8/7 },
-    { label: '🌿', nome: 'Agro',      cor: '#86efac', vel: 0.007, ang: Math.PI * 10/7 },
-    { label: '🎯', nome: 'Mentoria',  cor: '#fdba74', vel: 0.007, ang: Math.PI * 12/7 },
+    { label: '📚', nome: 'Estudo',    cor: '#c084fc', vel: 0.007, ang: Math.PI * 0/9 },
+    { label: '⚡', nome: 'Teens',     cor: '#f9a8d4', vel: 0.007, ang: Math.PI * 2/9 },
+    { label: '🩺', nome: 'Med',       cor: '#6ee7b7', vel: 0.007, ang: Math.PI * 4/9 },
+    { label: '⚖️', nome: 'Jurídico',  cor: '#fcd34d', vel: 0.007, ang: Math.PI * 6/9 },
+    { label: '👥', nome: 'RH',        cor: '#93c5fd', vel: 0.007, ang: Math.PI * 8/9 },
+    { label: '🌿', nome: 'Agro',      cor: '#86efac', vel: 0.007, ang: Math.PI * 10/9 },
+    { label: '🎯', nome: 'Mentoria',  cor: '#fdba74', vel: 0.007, ang: Math.PI * 12/9 },
+    { label: '🧠', nome: 'Mente',     cor: '#a78bfa', vel: 0.007, ang: Math.PI * 14/9 },
+    { label: '🤝', nome: 'Teams',     cor: '#f472b6', vel: 0.007, ang: Math.PI * 16/9 },
   ];
 
   const estrelas = Array.from({ length: 120 }, () => ({
