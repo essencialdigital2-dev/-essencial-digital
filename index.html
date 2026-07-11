@@ -15,7 +15,9 @@
     background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.3) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.2) 0%, transparent 50%),
                 radial-gradient(ellipse at 60% 80%, rgba(236,72,153,0.2) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(8,8,15,.90) 0%, rgba(8,8,15,.96) 60%, #08080f 100%),
                 #08080f;
+    background-size: cover; background-position: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding: 80px 20px 60px;
     position: relative; overflow: hidden;
@@ -199,6 +201,21 @@
 <body>
 
 <!-- HERO -->
+<script>
+  // Fotos de fundo da hero — trocam automaticamente a cada mês. Editar array para atualizar.
+  var HERO_FOTOS_HUB = [
+    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1600&q=80'
+  ];
+  (function(){
+    var i = new Date().getMonth() % HERO_FOTOS_HUB.length;
+    var s = document.createElement('style');
+    s.textContent = '.hero{background-image:radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.3) 0%, transparent 60%),radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.2) 0%, transparent 50%),radial-gradient(ellipse at 60% 80%, rgba(236,72,153,0.2) 0%, transparent 50%),linear-gradient(180deg, rgba(8,8,15,.90) 0%, rgba(8,8,15,.96) 60%, #08080f 100%),url(\'' + HERO_FOTOS_HUB[i] + '\');background-size:cover;background-position:center}';
+    document.head.appendChild(s);
+  })();
+</script>
 <div class="hero">
   <div class="badge">
     <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" style="border-radius:8px;flex-shrink:0">
